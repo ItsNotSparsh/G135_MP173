@@ -148,3 +148,13 @@ for chamber in sorted(dated["chamber"].unique()):
             print("No repeated daily readings.")
         else:
             print(runs.to_string(index=False))
+
+from src.data_checks.clean_data import clean_data
+
+cleaned_train = clean_data(train)
+
+print("\nCleaning check:")
+print("Rows before:", len(train))
+print("Rows after:", len(cleaned_train))
+print("Leakage column removed:", "spoilage_found_at_unloading" not in cleaned_train.columns)
+print("Target retained:", "spoilage_pct" in cleaned_train.columns)
