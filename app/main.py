@@ -1,3 +1,9 @@
+import json
+import logging
+import sys
+
+
+
 from pathlib import Path
 
 import joblib
@@ -5,7 +11,23 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
+class JsonFormatter(logging.Formatter):
+    def format(self, record):
+        entry = {
+            "time": self.formatTime(record),
+            "level": record.levelname,
+            "message": record.getMessage(),
+        }
+        entry.update(getattr(record, "fields", {}))
+        return json.dumps(entry)
 
+
+logger = logging.getLogger("mp173_api")
+handler = logging.StreamHandler(sys.stdout)
+handler.setFormatter(JsonFormatter())
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+logger.propagate = False
 
 MODEL_PATH = Path(__file__).resolve().parent.parent / "models" / "model.joblib"
 model = joblib.load(MODEL_PATH)
@@ -34,4 +56,13 @@ def health():
 def predict(lot: LotRequest):
     row = pd.DataFrame([lot.model_dump()])
     prediction = float(model.predict(row)[0])
+    logger.info(
+        "prediction",
+        extra={"fields": {
+            "crop": lot.crop,
+            "chamber": lot.chamber,
+            "storage_days": lot.storage_days,
+            "prediction": round(prediction, 3),
+        }},
+    )    
     return {"spoilage_pct": round(prediction, 3)}
