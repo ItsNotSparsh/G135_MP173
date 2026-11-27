@@ -41,22 +41,22 @@ tracking:
   experiment_name: "MP173-cold-storage-spoilage"
   best_run_id: "00b30540357a40149c10041a8c5af335"  # the MLflow run id of your v1 model
   registered_model_name: "MP173-spoilage-model"
-  champion_version: 1
+  champion_version: 2
 
 monitoring:
   psi:                     # cleaned train.csv vs later.csv, 10 bins
-    storage_days: null
-    temp_set_c: null
-    humidity_pct: null
-    power_cuts_hours: null
-    bag_weight_kg: null
-    door_openings_per_day: null
-  most_drifted_feature: null
+    storage_days: 0.043916
+    temp_set_c: 0.036242
+    humidity_pct: 0.038834
+    power_cuts_hours: 0.025110
+    bag_weight_kg: 5.538988
+    door_openings_per_day: 0.058773
+  most_drifted_feature: bag_weight_kg
   mae_by_group:            # v1 on later.csv, per value of chamber
-    'Chamber 1': null
-    'Chamber 2': null
-    'Chamber 3': null
-  worst_served_group: null
-  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
-  mae_v2_on_check: null    # v2 on the same rows
-  decision: null           # promote or keep
+    'Chamber 1': 1.677319
+    'Chamber 2': 2.540590
+    'Chamber 3': 1.752731
+  worst_served_group: 'Chamber 2'
+  mae_v1_on_check: 2.040886    # v1 on the last 30% of later.csv (by date)
+  mae_v2_on_check: 0.936457    # v2 on the same rows
+  decision: promote           # promote or keep
