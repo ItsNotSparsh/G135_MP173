@@ -1,0 +1,14 @@
+data:
+  train_path: data/raw/train.csv
+  later_path: data/raw/later.csv
+  holdout_path: data/raw/holdout_features.csv
+
+model:
+  random_state: 42
+  n_estimators: 100
+  validation_fraction: 0.20
+  later_training_fraction: 0.70
+  promotion_improvement: 0.15
+
+monitoring:
+  psi_bins: 10
