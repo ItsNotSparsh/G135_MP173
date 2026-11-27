@@ -16,6 +16,7 @@ MODEL_NAME = "MP173-spoilage-model"
 TRAIN_PATH = Path("data/raw/train.csv")
 LATER_PATH = Path("data/raw/later.csv")
 MODEL_PATH = Path("models/model.joblib")
+V1_MODEL_PATH = Path("models/model_v1.joblib")
 
 
 def main():
@@ -40,7 +41,7 @@ def main():
     later_for_training = later.iloc[:split_at]
     later_for_check = later.iloc[split_at:]
 
-    v1 = joblib.load(MODEL_PATH)
+    v1 = joblib.load(V1_MODEL_PATH)
     best_depth = v1.get_params()["regressor__max_depth"]
 
     combined_training = pd.concat(

@@ -19,7 +19,7 @@ def main():
     later_for_training = later.iloc[:split_at]
     later_for_check = later.iloc[split_at:]
 
-    v1 = joblib.load(Path("models/model.joblib"))
+    v1 = joblib.load(Path("models/model_v1.joblib"))
     v1_predictions = v1.predict(later_for_check[FEATURES])
     v1_mae = mean_absolute_error(later_for_check[TARGET], v1_predictions)
 
